@@ -6,8 +6,39 @@ from app.services.cache import MarketCache
 
 class MarketDataService:
     def __init__(self):
-        
+        self.provider = BinanceProvider()
 
+        self.cache = MarketCache()
+
+        def get_history(
+                self,
+                symbol,
+                timefrrame = '1h'
+            
+        ):
+            candles = self.provider.fetch_ohlcv(
+                symbol,
+                timeframe
+            )
+        clean = []
+
+        for row in candles: 
+
+            candle = {
+                "timestamp" : row[0],
+                "open" : row[1],
+                "high" : row[2],
+                "close" : row[4],
+                "volume" : row[5]
+            }
+
+candle = DataNormalizer.normalize(candle)
+
+if DataValidator.validate(candle):
+
+    clean.append(candle)
+
+    self.cache
 
 class MarketDataService:
     def connect(self):
