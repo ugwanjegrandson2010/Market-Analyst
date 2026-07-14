@@ -38,7 +38,11 @@ if DataValidator.validate(candle):
 
     clean.append(candle)
 
-    self.cache
+    self.cache.save(symbol, clean)
+
+
+return clean
+
 
 class MarketDataService:
     def connect(self):
