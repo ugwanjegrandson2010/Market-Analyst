@@ -42,3 +42,5 @@ redis
 
 celery
 
+numba
+
