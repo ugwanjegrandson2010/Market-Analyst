@@ -16,5 +16,27 @@ class EMASignal:
         if price > ema20 > ema50 > ema200:
 
             return TradingSignal(
-                
+                "EMA",
+                "Bullish",
+                1.0,
+                0.95,
+                "Strong bullish EMA alignment"
             )
+        if price < ema20 < ema50 < ema200:
+
+            return TradingSignal(
+                "EMA",
+                "Bearish",
+                1.0,
+                0.95,
+                "Strong bearish EMA alignment"
+            )
+        
+        return TradingSignal(
+            "EMA",
+             "Neutral",
+             0.50,
+             0.60,
+             "Mixed EMA alignment"
+                                    )
+    
