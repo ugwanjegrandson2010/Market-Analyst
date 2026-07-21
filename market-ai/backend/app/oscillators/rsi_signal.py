@@ -24,6 +24,6 @@ class RSISignal:
             "RSI",
             "Neutral",
             0.30,
-            0.50
+            0.50,
             "RSI is within normal operating range."
         )
