@@ -1,7 +1,8 @@
 from typing import List, Dict, Any
+from types import SimpleNamespace
 from app.confluence.engine import ConfluenceEngine
 from app.confluence.models import ConfluenceResult
-from types import SimpleNamespace
+from app.services.prediction import PredictionModel
 
 
 def _sma(values, period):
@@ -92,14 +93,24 @@ class AnalysisEngine:
         if result is not None:
             summary = SummaryBuilder().build(result.direction, result.confidence, result.reasons)
 
-        # heuristic prediction (no ML deps)
-        prob_up = 0.5
-        if trend_dir == "Bullish": prob_up += 0.1
-        if rsi is not None and rsi < 40: prob_up += 0.1
-        if rsi is not None and rsi > 60: prob_up -= 0.1
-        if macd is not None and macd > 0: prob_up += 0.1
-        prob_up = max(0.05, min(0.95, prob_up))
-
+        # model-based prediction (pure Python logistic regression)
+        model_result = PredictionModel().fit_predict(rows)
+        if model_result:
+            prediction = {"direction": model_result["direction"],
+                         "probability_up": model_result["probability_up"],
+                         "trained_samples": model_result["trained_samples"],
+                         "note": "logistic regression trained on historical features (educational)"}
+        else:
+            # fallback heuristic
+            prob_up = 0.5
+            if trend_dir == "Bullish": prob_up += 0.1
+            if rsi is not None and rsi < 40: prob_up += 0.1
+            if rsi is not None and rsi > 60: prob_up -= 0.1
+            if macd is not None and macd > 0: prob_up += 0.1
+            prob_up = max(0.05, min(0.95, prob_up))
+            prediction = {"direction": "up" if prob_up >= 0.5 else "down",
+                          "probability_up": round(prob_up, 3),
+                          "note": "heuristic; not financial advice"}
         indicators = {
             "sma20": sma20, "sma50": sma50,
             "ema12": _ema(closes, 12), "ema26": _ema(closes, 26),
@@ -114,8 +125,6 @@ class AnalysisEngine:
             "signals": [{"indicator": s.indicator, "direction": s.direction,
                         "confidence": s.confidence, "description": s.description} for s in signals],
             "confluence": summary if isinstance(summary, dict) else (summary or {}),
-            "prediction": {"direction": "up" if prob_up >= 0.5 else "down",
-                           "probability_up": round(prob_up, 3),
-                           "note": "heuristic; not financial advice"},
+            "prediction": prediction,
             "disclaimer": "Educational only. Not financial advice.",
         }
