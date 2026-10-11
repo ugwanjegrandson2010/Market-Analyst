@@ -10,6 +10,10 @@ engine = MarketDataEngine()
 analyzer = AnalysisEngine()
 harvester = HarvestEngine()
 
+@router.get("/harvest/all")
+def harvest_all():
+    return harvester.harvest_all()
+
 @router.get("/harvest/{symbol}")
 def harvest(symbol: str):
     return harvester.harvest(symbol)
