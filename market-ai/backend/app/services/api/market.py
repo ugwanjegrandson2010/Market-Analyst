@@ -14,6 +14,11 @@ harvester = HarvestEngine()
 def harvest_all():
     return harvester.harvest_all()
 
+@router.get("/retrain")
+def retrain():
+    from app.services.reinforcement import ReinforcementEngine
+    return ReinforcementEngine().retrain()
+
 @router.get("/harvest/{symbol}")
 def harvest(symbol: str):
     return harvester.harvest(symbol)

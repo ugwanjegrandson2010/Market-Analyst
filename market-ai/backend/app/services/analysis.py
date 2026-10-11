@@ -3,6 +3,7 @@ from types import SimpleNamespace
 from app.confluence.engine import ConfluenceEngine
 from app.confluence.models import ConfluenceResult
 from app.services.prediction import PredictionModel
+from app.services.reinforcement import ReinforcementEngine
 
 
 def _sma(values, period):
@@ -111,6 +112,7 @@ class AnalysisEngine:
             prediction = {"direction": "up" if prob_up >= 0.5 else "down",
                           "probability_up": round(prob_up, 3),
                           "note": "heuristic; not financial advice"}
+
         indicators = {
             "sma20": sma20, "sma50": sma50,
             "ema12": _ema(closes, 12), "ema26": _ema(closes, 26),
@@ -118,6 +120,14 @@ class AnalysisEngine:
             "latest_close": closes[-1],
         }
 
+        features = [indicators["latest_close"],
+                    indicators["sma20"] if indicators["sma20"] is not None else indicators["latest_close"],
+                    indicators["rsi14"] if indicators["rsi14"] is not None else 50.0,
+                    indicators["macd"] if indicators["macd"] is not None else 0.0]
+        reinforced = ReinforcementEngine().predict(features)
+        if reinforced:
+            prediction = reinforced
+        ReinforcementEngine().log_prediction(symbol, features, prediction["probability_up"], prediction["direction"], indicators["latest_close"])
         return {
             "symbol": symbol,
             "latest": latest,
