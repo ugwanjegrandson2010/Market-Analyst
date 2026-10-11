@@ -27,7 +27,15 @@ Interactive docs: `http://127.0.0.1:8000/docs`
 - `GET /api/harvest/all` - Harvest curated multi-asset universe
 - `GET /api/retrain` - Retrain reinforcement model
 
-## Notes
+## Dashboard
+
+Static dashboard at `market-ai/dashboard/`. With backend running:
+
+```bash
+cd market-ai/dashboard && python3 -m http.server 5173
+```
+
+Open http://localhost:5173. Set Backend URL to your FastAPI URL if different.
 
 - Pure Python indicators; pandas/scikit-learn excluded due to CPU constraints.
 - `.venv/` and `__pycache__/` are gitignored.

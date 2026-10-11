@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Market Analyst Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Market Analyst Dashboard</h1>
+    <p class="subtitle">See what the market is doing, what the signals suggest, and what to watch out for.</p>
+  </header>
+
+  <section class="controls">
+    <label>Backend URL<input id="backendUrl" value="http://localhost:8000" /></label>
+    <label>Symbol<input id="symbol" value="AAPL" /></label>
+    <button id="refreshBtn">Analyze</button>
+    <button id="harvestBtn">Harvest data</button>
+  </section>
+
+  <section id="statusBar" class="status">Ready.</section>
+
+  <section class="grid">
+    <div class="card span-2">
+      <h2>Price trend</h2>
+      <canvas id="priceChart"></canvas>
+    </div>
+    <div class="card span-2">
+      <h2>Volume</h2>
+      <canvas id="volumeChart"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Latest price</h2>
+      <div id="latestPrice" class="big"></div>
+      <div id="latestMeta"></div>
+    </div>
+
+    <div class="card">
+      <h2>Indicators</h2>
+      <div id="indicators"></div>
+    </div>
+
+    <div class="card">
+      <h2>Confluence</h2>
+      <div id="confluence"></div>
+    </div>
+
+    <div class="card">
+      <h2>Prediction</h2>
+      <div id="prediction"></div>
+    </div>
+
+    <div class="card span-2">
+      <h2>Signals</h2>
+      <div id="signals"></div>
+    </div>
+
+    <div class="card span-2">
+      <h2>Risk assessment</h2>
+      <div id="risk"></div>
+    </div>
+
+    <div class="card span-2 caution">
+      <h2>Caution & explanation</h2>
+      <div id="caution"></div>
+    </div>
+  </section>
+
+  <footer>educational only — not financial advice.</footer>
+  <script src="app.js"></script>
+</body>
+</html>
