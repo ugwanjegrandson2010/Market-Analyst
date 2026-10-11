@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Learn & Practice</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header><h1>Learn & Practice Markets</h1><p class="subtitle">Work through units, practice indicators, and paper-trade to build skill safely.</p></header>
+<section class="controls">
+  <a href="index.html" style="align-self:flex-end;">Dashboard</a>
+</section>
+<section class="grid">
+  <div class="card span-2">
+    <h2>Curriculum (units unlock as you pass)</h2>
+    <div id="units"></div>
+  </div>
+  <div class="card span-2">
+    <h2>Indicator playground</h2>
+    <p>Paste simple CSV (timestamp,close) or use sample. Computes SMA/RSI and plots.</p>
+    <textarea id="csv" rows="6" style="width:100%"></textarea>
+    <button id="plotBtn">Plot</button>
+    <canvas id="playChart"></canvas>
+  </div>
+  <div class="card span-2">
+    <h2>Paper trading trainer</h2>
+    <div id="paper"></div>
+  </div>
+  <div class="card span-2 caution">
+    <h2>Psychology reminders</h2>
+    <ul>
+      <li>Start small; risk only 1% per trade.</li>
+      <li>Journal every trade; review weekly.</li>
+      <li>One strategy focus per month.</li>
+      <li>If emotional, stop trading.</li>
+    </ul>
+  </div>
+</section>
+<script src="learn.js"></script>
+</body></html>
