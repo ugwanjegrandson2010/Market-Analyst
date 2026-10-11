@@ -23,6 +23,12 @@ def retrain():
 def harvest(symbol: str):
     return harvester.harvest(symbol)
 
+@router.get("/risk/analyze/{symbol}")
+def risk_analyze(symbol: str):
+    from app.services.risk import RiskEngine
+    a = analyzer.analyze(symbol, engine.get_history(symbol))
+    return RiskEngine().analyze(symbol, a)
+
 @router.get("/analyze/{symbol}")
 def analyze(symbol: str):
     return analyzer.analyze(symbol, engine.get_history(symbol))
