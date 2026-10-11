@@ -1,21 +1,10 @@
-import pandas_ta as ta
+import pandas as pd
 from .base_indicator import BaseIndicator
+
 
 class SMA(BaseIndicator):
     def calculate(self, df):
-
-        df["SMA20"] = ta.sma(
-            df["close"],
-            0
-        )
-
-        df["SMA50"] = ta.sma(
-            df["close"],
-            50
-        )
-
-        df["SMA200"] = ta.sma(
-            df["close"],
-            200
-        )
+        df["SMA20"] = df["close"].rolling(20).mean()
+        df["SMA50"] = df["close"].rolling(50).mean()
+        df["SMA200"] = df["close"].rolling(200).mean()
         return df

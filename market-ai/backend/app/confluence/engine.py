@@ -16,12 +16,12 @@ class ConfluenceEngine:
           )
           maximum = bullish + bearish
 
-          bullish_score = ScoreNormlizer.normalize(
+          bullish_score = ScoreNormalizer.normalize(
                bullish, 
                maximum
           )
 
-          bearish-score = ScoreNormalizer.normalize(
+          bearish_score = ScoreNormalizer.normalize(
                bearish,
                maximum
           )

@@ -6,9 +6,9 @@ class IndicatorEngine:
          df = dataframe.copy()
 
          for indicator in INDICATORS:
-              
+
               df = indicator.calculate(df)
 
-              return df 
+         return df
          
          

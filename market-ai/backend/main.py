@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.api.market import router as market_router
+from app.services.api.market import router as market_router
 
 app = FastAPI(
     title="Market AI",
